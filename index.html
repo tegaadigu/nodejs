@@ -57,8 +57,14 @@
 	var socket = io();  //Load socket-io client...
 	var form = $('form');
 	var input = form.find(':input');
+
+socket.on('connect', function(){
+	socket.emit('join', Math.floor((Math.random() * 3) +1));
+})
+
 	form.submit(function(e){
 			socket.emit('chat-message', input.val()); //Trigger message socket message.
+			$('ul').append($('<li>').text(input.val()));
 			input.val('');//clear input field
 			return false;
 	})
